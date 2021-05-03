@@ -33,8 +33,6 @@ open('google.csv', 'wb').write(res.content)
 
 df_goog = pd.read_csv('google.csv', skiprows=[0])
 
-#https://www.youtube.com/watch?v=5eVF_yTcmmg
-
 def f(string):
     try: 
         assert "youtu.be" in string or "youtube.com" in string
