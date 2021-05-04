@@ -1,7 +1,7 @@
 #cd rthk_checker
-date
-python3 main.py
+date >> output.log
+python3 main.py >> output.log
 git add *
 git commit --all -F ../commitmessage.txt
 git push
-echo
+echo >> output.log
