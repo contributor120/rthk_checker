@@ -77,7 +77,7 @@ if youtube_dl_log != None and youtube_dl_log != '':
     
 # add a column saying if it's found
 def checker(row):
-    if 'youtube_dl_entry' in row.keys():
+    if 'youtube_dl_entry_contributor120' in row.keys():
         return row['youtube_dl_entry_contributor120'] == True or row['sheet_entry'] == True
     else:
         return row['sheet_entry']
