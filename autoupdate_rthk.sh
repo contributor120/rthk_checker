@@ -1,4 +1,4 @@
-#cd rthk_checker
+cd ~/rthk_checker
 date >> output.log
 python3 main.py >> output.log
 git add *
