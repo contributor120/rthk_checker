@@ -3,6 +3,8 @@ import pandas as pd
 import requests
 import numpy as np
 
+print("##### Youtube RTHK Backup - Contributor120 #####")
+
 youtube_json = "rthk.json"
 sheet_id = "1JPyevWnxvoq_xzY4ptOgaTaTYSLE9oMva66kxm66K0k"
 gid = "1552175605"
@@ -19,6 +21,8 @@ with open(youtube_json, 'r') as file:
 # Change the data around a bit (ok if still messy)
 df = pd.DataFrame(data)
 del data
+
+print("Number of entires in metadata archive: ", len(df))
 
 # hardcoded, whatever
 keys = ['id', 'title', 'unpublished']
@@ -65,18 +69,23 @@ df_full = df[['id', 'title', 'unpublished']].merge(
 
 if youtube_dl_log != None and youtube_dl_log != '':
     df_ydl = pd.read_csv('archive.log', delimiter=' ', header=None, names=['source', 'id'])
-    df_ydl['youtube_dl_entry'] = True
+    df_ydl['youtube_dl_entry_contributor120'] = True
     
     df_full = df_full.merge(
-            df_ydl[['id', 'youtube_dl_entry']],
+            df_ydl[['id', 'youtube_dl_entry_contributor120']],
             on='id', how='left')
     
 # add a column saying if it's found
 def checker(row):
     if 'youtube_dl_entry' in row.keys():
-        return row['youtube_dl_entry'] == True or row['sheet_entry'] == True
+        return row['youtube_dl_entry_contributor120'] == True or row['sheet_entry'] == True
     else:
         return row['sheet_entry']
 df_full['Backup_found'] = df_full.apply(checker, axis=1)
 
+print("Number of files confirmed backed up: ", len(df_full[df_full['Backup_found']==True]))
+
 df_full.to_csv('status.csv')
+
+df_goog.to_csv('google.csv')
+df_ydl.to_csv('youtubedl.csv')
